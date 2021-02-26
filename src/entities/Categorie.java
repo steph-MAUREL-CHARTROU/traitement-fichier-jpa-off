@@ -1,7 +1,13 @@
 package entities;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * 
@@ -9,11 +15,16 @@ import javax.persistence.Id;
  *
  */
 @Entity
+@Table (name= "CATEGORIE")
 public class Categorie {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String nom_categorie;
+	
+	@OneToMany(mappedBy="categorie_produit")
+	private List<Produit> produits;
 	
 	
 	public Categorie() {
