@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * 
@@ -19,6 +20,7 @@ import javax.persistence.OneToMany;
  *
  */
 @Entity
+@Table( name="PRODUIT")
 public class Produit {
 
 	@Id
@@ -48,15 +50,47 @@ public class Produit {
 	@Column(name = "fibres100gr")
 	private Double fibres100gr_produit;
 
+	                                                            // Relations Conception //
+
+				//----Produits - additifs-----//
+	
+	@ManyToMany
+	@JoinTable(name = " TB_PROD_ADDTF", 
+	joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "id"),
+	inverseJoinColumns = @JoinColumn(name = "ADDTF_ID", referencedColumnName = " id"))
+
+	private List<Additif> additifs;
+	
+				//----Produits - allergenes-----//
+
+	@ManyToMany
+	@JoinTable(name = " TB_PROD_ALLERG", 
+	joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "id"),
+	inverseJoinColumns = @JoinColumn(name = "ALLERG_ID", referencedColumnName = " id"))
+
+	private List<Allergene> allergenes;
+	
+	          //----Produit - Ingredients-----//
+	
 	@ManyToMany
 	@JoinTable(name = " TB_PROD_INGRDT", 
 	joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "id"),
 	inverseJoinColumns = @JoinColumn(name = "INGRDT_ID", referencedColumnName = " id"))
-
+	
+	private List<Ingredient>ingredients;
+	
+	          //----Produits - Categories-----//
+	
 	@ManyToOne
 	@JoinColumn(name = "CATEGORIE_ID")
 	private Categorie categorie;
-
+	
+	          //----Produits - Marque -----//
+	@ManyToOne
+	@JoinColumn(name="MARQUE_ID")
+	private Marque marque;
+	
+	
 	public Produit() {
 
 	}

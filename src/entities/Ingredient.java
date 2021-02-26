@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 /**
  * 
@@ -20,7 +23,10 @@ public class Ingredient {
 	private int id;
 	private String nom_ingredient;
 	
-	
+	@ManyToMany
+	@JoinTable(name = " TB_INGRDT_PROD", 
+	joinColumns = @JoinColumn(name = "INGRDT_ID", referencedColumnName = "id"),
+	inverseJoinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = " id"))
 	private List<Produit> produits;
 	
 
