@@ -23,10 +23,10 @@ public class Additif {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column( name="nom_additif")
-	private String nom_additif;
+	private String nomAdditif;
 	
 	@ManyToMany
-	@JoinTable(name = " TB_PROD_ADDTF", 
+	@JoinTable(name = " TB_ADDTF_PROD", 
 	joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "id"),
 	inverseJoinColumns = @JoinColumn(name = "ADDTF_ID", referencedColumnName = " id"))
 
@@ -37,31 +37,49 @@ public class Additif {
 
 	}
 
-	public Additif(int id, String nom_additif) {
+
+	public Additif(int id, String nomAdditif, List<Additif> additifs) {
 		super();
 		this.id = id;
-		this.nom_additif = nom_additif;
+		this.nomAdditif = nomAdditif;
+		this.additifs = additifs;
 	}
+
 
 	public int getId() {
 		return id;
 	}
 
+
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getNom_additif() {
-		return nom_additif;
+
+	public String getNomAdditif() {
+		return nomAdditif;
 	}
 
-	public void setNom_additif(String nom_additif) {
-		this.nom_additif = nom_additif;
+
+	public void setNomAdditif(String nomAdditif) {
+		this.nomAdditif = nomAdditif;
 	}
+
+
+	public List<Additif> getAdditifs() {
+		return additifs;
+	}
+
+
+	public void setAdditifs(List<Additif> additifs) {
+		this.additifs = additifs;
+	}
+
 
 	@Override
 	public String toString() {
-		return "Additif [id=" + id + ", nom_additif=" + nom_additif + "]";
+		return "Additif [id=" + id + ", nomAdditif=" + nomAdditif + ", additifs=" + additifs + "]";
 	}
 
+	
 }

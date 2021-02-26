@@ -41,6 +41,8 @@ public class IntegrationOpenFoodFacts {
 		
 		for ( String infos : lines ) {
 			
+			// TODO créer la transaction et la demarrer ici
+			
 			String [] tabInfoProd = infos.split("\\|", -1); // Conversion du CSV en Tableau 
 			
 			// je récupère les infos du CSV
@@ -61,6 +63,9 @@ public class IntegrationOpenFoodFacts {
 			
 		}
 		
+		//transation.commit();
+		
 	}
+	
 
 }

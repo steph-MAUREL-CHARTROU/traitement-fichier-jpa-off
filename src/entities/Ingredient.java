@@ -24,7 +24,7 @@ public class Ingredient {
 	private String nom_ingredient;
 	
 	@ManyToMany
-	@JoinTable(name = " TB_INGRDT_PROD", 
+	@JoinTable(name = " TB_PROD_INGRDT", 
 	joinColumns = @JoinColumn(name = "INGRDT_ID", referencedColumnName = "id"),
 	inverseJoinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = " id"))
 	private List<Produit> produits;

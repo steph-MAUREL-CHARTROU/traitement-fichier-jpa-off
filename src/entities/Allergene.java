@@ -18,31 +18,29 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="ALLERGENE")
+@Table(name = "ALLERGENE")
 public class Allergene {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(name="nom_allergene")
-	private String nom_allergene;
-	
+	@Column(name = "nom_allergene")
+	private String nomAllergene;
+
 	@ManyToMany
-	@JoinTable(name = "TB_ALLERG_PROD", 
-	joinColumns = @JoinColumn(name = "ALLERG_ID", referencedColumnName = "id"),
-	inverseJoinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = " id"))
+	@JoinTable(name = "TB_PROG_ALLERG", joinColumns = @JoinColumn(name = "ALLERG_ID", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = " id"))
 
 	private List<Produit> produits;
-	
 
 	public Allergene() {
-	
+
 	}
 
-	public Allergene(int id, String nom_allergene) {
+	public Allergene(int id, String nomAllergene, List<Produit> produits) {
 		super();
 		this.id = id;
-		this.nom_allergene = nom_allergene;
+		this.nomAllergene = nomAllergene;
+		this.produits = produits;
 	}
 
 	public int getId() {
@@ -53,18 +51,20 @@ public class Allergene {
 		this.id = id;
 	}
 
-	public String getNom_allergene() {
-		return nom_allergene;
+	public String getNomAllergene() {
+		return nomAllergene;
 	}
 
-	public void setNom_allergene(String nom_allergene) {
-		this.nom_allergene = nom_allergene;
+	public void setNomAllergene(String nomAllergene) {
+		this.nomAllergene = nomAllergene;
 	}
 
-	@Override
-	public String toString() {
-		return "Allergene [id=" + id + ", nom_allergene=" + nom_allergene + "]";
+	public List<Produit> getProduits() {
+		return produits;
 	}
-		
+
+	public void setProduits(List<Produit> produits) {
+		this.produits = produits;
+	}
 
 }

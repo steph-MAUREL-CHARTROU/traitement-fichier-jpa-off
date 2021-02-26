@@ -21,10 +21,10 @@ public class Marque {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String nom_marque;
+	private String nomMarque;
 	
 	
-	@OneToMany(mappedBy="marque_produit")
+	@OneToMany(mappedBy="marque")
 	private List<Produit> produits;
 	
 	
@@ -32,35 +32,50 @@ public class Marque {
 		
 	}
 
-	public Marque(int id, String nom_marque) {
+
+	public Marque(int id, String nomMarque, List<Produit> produits) {
 		super();
 		this.id = id;
-		this.nom_marque = nom_marque;
+		this.nomMarque = nomMarque;
+		this.produits = produits;
 	}
+
 
 	public int getId() {
 		return id;
 	}
 
+
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getNom_marque() {
-		return nom_marque;
+
+	public String getNomMarque() {
+		return nomMarque;
 	}
 
-	public void setNom_marque(String nom_marque) {
-		this.nom_marque = nom_marque;
+
+	public void setNomMarque(String nomMarque) {
+		this.nomMarque = nomMarque;
 	}
+
+
+	public List<Produit> getProduits() {
+		return produits;
+	}
+
+
+	public void setProduits(List<Produit> produits) {
+		this.produits = produits;
+	}
+
 
 	@Override
 	public String toString() {
-		return "Marque [id=" + id + ", nom_marque=" + nom_marque + "]";
+		return "Marque [id=" + id + ", nomMarque=" + nomMarque + ", produits=" + produits + "]";
 	}
-	
-	
-	
+
 	
 
 }
