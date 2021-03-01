@@ -32,11 +32,9 @@ public class Categorie {
 	}
 
 
-	public Categorie(int id, String nomCategorie, List<Produit> produits) {
-		super();
-		this.id = id;
+	public Categorie(String nomCategorie) {
+		
 		this.nomCategorie = nomCategorie;
-		this.produits = produits;
 	}
 
 

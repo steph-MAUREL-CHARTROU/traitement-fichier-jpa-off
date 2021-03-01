@@ -11,6 +11,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+
+
+import daos.AdditifDao;
+import daos.AllergeneDao;
+import daos.CategorieDao;
+import daos.IngredientDao;
+import daos.MarqueDao;
+import daos.ProduitDao;
+import utils.Parser;
 /**
  * 
  * 
@@ -22,48 +31,66 @@ public class IntegrationOpenFoodFacts {
 
 	public static void main(String[] args) throws IOException {
 		
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("tp-yucca");
-		EntityManager em = entityManagerFactory.createEntityManager();
-		EntityTransaction transaction = em.getTransaction();
+		
+		// remettre l'entitymanager ici
+		
+
+		// ------------Lecture du fichier à mettre en base ------------//
+		Path pathBase= Paths.get("C:\\Users\\33782\\Desktop\\DiginamicWork\\java\\traitement-fichier-jpa-off\\resources\\fichierSource\\open-food-facts.csv");
 		
 		
-		Path pathBase= Paths.get("C://User/33782/Desktop/DiginamicWork/java/traitement-fichier-jpa-off/resources/fichierSource/open-food-facts.csv");
-		
+		// -----------Récupération des lignes du fichier et stockage dans une liste de type String---------//
 		List<String> lines= Files.readAllLines(pathBase, StandardCharsets.UTF_8);
-		
 		if ( lines == null) {
 			
 			System.out.println(" STOP // erreur d'execution ");
 		}
-		lines.remove(0); // je retire l'entête
 		
-		transaction.begin();
+		//------------ retrait de l'entête [0]----------------------//
+		lines.remove(0); 
+		
+		//---------INSERTION EN BASE À PARTIR DES DAOs---------------//
+		
+		
+		ProduitDao produitDao = new ProduitDao();
+		CategorieDao categorieDao = new CategorieDao();
+		IngredientDao ingredientDao = new IngredientDao();
+		MarqueDao marqueDao = new MarqueDao();
+		AdditifDao additifDao = new AdditifDao();
+		AllergeneDao allergeneDao = new AllergeneDao();
+		
 		
 		for ( String infos : lines ) {
 			
-			// TODO créer la transaction et la demarrer ici
+		
+		// ------------ Conversion du CSV en Tableau -----------------//	
+			String [] tabInfoProd = infos.split("\\|", -1);
 			
-			String [] tabInfoProd = infos.split("\\|", -1); // Conversion du CSV en Tableau 
+			// -------------Récupération des données dans le CSV ------------------//
 			
-			// je récupère les infos du CSV
-			
-			String categorie = tabInfoProd [0];
-			String nom_marque = tabInfoProd[1];
-			String nom_produit = tabInfoProd[2];
+			String nomCategorie = tabInfoProd [0];
+			String nomMarque = tabInfoProd[1];
+			String nomProduit = tabInfoProd[2];
 			char nutriGradeFr = tabInfoProd[3].charAt(0);
 			String ingredients = tabInfoProd[4];
 			
-			Double energie100gr = Double.parseDouble(tabInfoProd[5]);
-			Double graisse100gr = Double.parseDouble(tabInfoProd[6]);
-			Double sucres100gr = Double.parseDouble(tabInfoProd[7]);
-			Double fibres100gr = Double.parseDouble(tabInfoProd[8]);
-			Double protein100gr = Double.parseDouble(tabInfoProd[9]);
-			Double sel100gr = Double.parseDouble(tabInfoProd[10]);
-				
+			Double energie100gr = Parser.parseDouble(tabInfoProd[5]);
+			Double graisse100gr = Parser.parseDouble(tabInfoProd[6]);
+			Double sucres100gr = Parser.parseDouble(tabInfoProd[7]);
+			Double fibres100gr = Parser.parseDouble(tabInfoProd[8]);
+			Double protein100gr = Parser.parseDouble(tabInfoProd[9]);
+			Double sel100gr = Parser.parseDouble(tabInfoProd[10]);
+			
+			
+			Categorie categorie = new Categorie(nomCategorie);
+			categorieDao.insertCategorie(categorie);
+			
+			Marque marque = new Marque(nomMarque);
+			marqueDao.insertMarque(marque);
 			
 		}
 		
-		//transation.commit();
+	//transation.commit();	
 		
 	}
 	
