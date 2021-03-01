@@ -36,11 +36,10 @@ public class Allergene {
 
 	}
 
-	public Allergene(int id, String nomAllergene, List<Produit> produits) {
-		super();
-		this.id = id;
+	public Allergene(String nomAllergene) {
+		
 		this.nomAllergene = nomAllergene;
-		this.produits = produits;
+		
 	}
 
 	public int getId() {

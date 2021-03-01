@@ -18,8 +18,8 @@ public class CategorieDao extends AbstractDao {
 
 	// connection via la classe AbstractDao qui centralise
 
-	private EntityManager em = AbstractDao.emf.createEntityManager();
-	private EntityTransaction transaction = em.getTransaction();
+	private static EntityManager em = AbstractDao.emf.createEntityManager();
+	private static EntityTransaction transaction = em.getTransaction();
 
 	public CategorieDao() {
 
@@ -29,22 +29,38 @@ public class CategorieDao extends AbstractDao {
 
 	// Insérer en base de données
 
-	public void insertCategorie(Categorie categorie) {
+	public static Categorie insertCategorie(String[] tabInfoProd) {
 
-		TypedQuery<Categorie> query = em.createQuery(
-				"SELECT categorie FROM Categorie categorie WHERE categorie.nomCategorie = ?1", Categorie.class);
-		query.setParameter(1, categorie.getNomCategorie());
-		List<Categorie> listCategorie = query.getResultList();
+		String nomCategorie = tabInfoProd[0];
 
-		if (listCategorie.isEmpty()) {
+		if (nomCategorie.length() <= 255) {
 
-			transaction.begin();
+			Categorie categorie = new Categorie(null);
 
-			em.persist(categorie);
+			TypedQuery<Categorie> query = em.createQuery(
+					"SELECT categorie FROM Categorie categorie WHERE categorie.nomCategorie = ?1", Categorie.class);
+			query.setParameter(1, categorie.getNomCategorie());
+			List<Categorie> listCategorie = query.getResultList();
 
-			transaction.commit();
+			if (listCategorie.isEmpty()) {
 
+				transaction.begin();
+
+				categorie = new Categorie();
+				categorie.setNomCategorie(nomCategorie);
+
+				em.persist(categorie);
+				transaction.commit();
+
+			} else {
+
+				categorie = listCategorie.get(0);
+
+			}
+
+			return categorie;
 		}
+		return null;
 
 	}
 

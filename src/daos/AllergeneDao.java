@@ -1,8 +1,13 @@
 package daos;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+
 import entities.Allergene;
+import entities.Categorie;
 
 
 /**
@@ -28,11 +33,20 @@ public class AllergeneDao extends AbstractDao {
 			// Insérer en base de données
 
 			public void insertAllergene( Allergene allergene) {
-				transaction.begin();
+				
+				
+				TypedQuery<Allergene> query = em.createQuery(
+						"SELECT allergene FROM Allergene allergene WHERE allergene.nomAllergene = ?1", Allergene.class);
+				query.setParameter(1, allergene.getNomAllergene());
+				List<Allergene> listAllergene = query.getResultList();
 
-				em.persist(allergene);
+				if (listAllergene.isEmpty()) {
 
-				transaction.commit();
+					transaction.begin();
+
+					em.persist(allergene);
+
+					transaction.commit();
 			}
 
 			// TODO Récupérer par ID
@@ -40,4 +54,5 @@ public class AllergeneDao extends AbstractDao {
 			// TODO update
 			// TODO delete
 
+}
 }

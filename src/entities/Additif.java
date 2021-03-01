@@ -38,11 +38,10 @@ public class Additif {
 	}
 
 
-	public Additif(int id, String nomAdditif, List<Additif> additifs) {
-		super();
-		this.id = id;
+	public Additif(String nomAdditif) {
+		
 		this.nomAdditif = nomAdditif;
-		this.additifs = additifs;
+
 	}
 
 

@@ -20,94 +20,77 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table( name="PRODUIT")
+@Table(name = "PRODUIT")
 public class Produit {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(name = " nom_produit")
-	private String nom_produit;
+	private String nomProduit;
 
 	@Column(name = "nutritionGradeFr")
-	private String nutritionGradeFr_produit;
+	private String nutritionGradeFrProduit;
 
 	@Column(name = "energie100gr")
-	private Double energie100gr_produit;
+	private Double energie100grProduit;
 
 	@Column(name = "sel100gr")
-	private Double sel100gr_produit;
+	private Double sel100grProduit;
 
 	@Column(name = "graisse100gr")
-	private Double graisse100gr_produit;
+	private Double graisse100grProduit;
 
 	@Column(name = "sucres100gr")
-	private Double sucres100gr_produit;
+	private Double sucres100grProduit;
 
 	@Column(name = "protein100gr")
-	private Double protein100gr_produit;
+	private Double protein100grProduit;
 
 	@Column(name = "fibres100gr")
-	private Double fibres100gr_produit;
+	private Double fibres100grProduit;
 
-	                                                            // Relations Conception //
+	// Relations Conception //
 
-				//----Produits - additifs-----//
-	
+	// ----Produits - additifs-----//
+
 	@ManyToMany
-	@JoinTable(name = " TB_PROD_ADDTF", 
-	joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "id"),
-	inverseJoinColumns = @JoinColumn(name = "ADDTF_ID", referencedColumnName = " id"))
+	@JoinTable(name = " TB_PROD_ADDTF", joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "ADDTF_ID", referencedColumnName = " id"))
 
 	private List<Additif> additifs;
-	
-				//----Produits - allergenes-----//
+
+	// ----Produits - allergenes-----//
 
 	@ManyToMany
-	@JoinTable(name = " TB_PROD_ALLERG", 
-	joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "id"),
-	inverseJoinColumns = @JoinColumn(name = "ALLERG_ID", referencedColumnName = " id"))
+	@JoinTable(name = " TB_PROD_ALLERG", joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "ALLERG_ID", referencedColumnName = " id"))
 
 	private List<Allergene> allergenes;
-	
-	          //----Produit - Ingredients-----//
-	
+
+	// ----Produit - Ingredients-----//
+
 	@ManyToMany
-	@JoinTable(name = " TB_PROD_INGRDT", 
-	joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "id"),
-	inverseJoinColumns = @JoinColumn(name = "INGRDT_ID", referencedColumnName = " id"))
-	
-	private List<Ingredient>ingredients;
-	
-	          //----Produits - Categories-----//
-	
+	@JoinTable(name = " TB_PROD_INGRDT", joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "INGRDT_ID", referencedColumnName = " id"))
+
+	private List<Ingredient> ingredients;
+
+	// ----Produits - Categories-----//
+
 	@ManyToOne
 	@JoinColumn(name = "CATEGORIE_ID")
 	private Categorie categorie;
-	
-	          //----Produits - Marque -----//
+
+	// ----Produits - Marque -----//
 	@ManyToOne
-	@JoinColumn(name="MARQUE_ID")
+	@JoinColumn(name = "MARQUE_ID")
 	private Marque marque;
-	
-	
+
 	public Produit() {
 
 	}
 
-	public Produit(int id, String nom_produit, String nutritionGradeFr_produit, Double energie100gr_produit,
-			Double sel100gr_produit, Double graisse100gr_produit, Double sucres100gr_produit,
-			Double protein100gr_produit, Double fibres100gr_produit) {
-		super();
-		this.id = id;
-		this.nom_produit = nom_produit;
-		this.nutritionGradeFr_produit = nutritionGradeFr_produit;
-		this.energie100gr_produit = energie100gr_produit;
-		this.sel100gr_produit = sel100gr_produit;
-		this.graisse100gr_produit = graisse100gr_produit;
-		this.sucres100gr_produit = sucres100gr_produit;
-		this.protein100gr_produit = protein100gr_produit;
-		this.fibres100gr_produit = fibres100gr_produit;
+	public Produit(String nomProduit) {
+
+		this.nomProduit = nomProduit;
 	}
 
 	public int getId() {
@@ -118,77 +101,121 @@ public class Produit {
 		this.id = id;
 	}
 
-	public String getNom_produit() {
-		return nom_produit;
+	public String getNomProduit() {
+		return nomProduit;
 	}
 
-	public void setNom_produit(String nom_produit) {
-		this.nom_produit = nom_produit;
+	public void setNomProduit(String nomProduit) {
+		this.nomProduit = nomProduit;
 	}
 
-	public String getNutritionGradeFr_produit() {
-		return nutritionGradeFr_produit;
+	public String getNutritionGradeFrProduit() {
+		return nutritionGradeFrProduit;
 	}
 
-	public void setNutritionGradeFr_produit(String nutritionGradeFr_produit) {
-		this.nutritionGradeFr_produit = nutritionGradeFr_produit;
+	public void setNutritionGradeFrProduit(String nutritionGradeFrProduit) {
+		this.nutritionGradeFrProduit = nutritionGradeFrProduit;
 	}
 
-	public Double getEnergie100gr_produit() {
-		return energie100gr_produit;
+	public Double getEnergie100grProduit() {
+		return energie100grProduit;
 	}
 
-	public void setEnergie100gr_produit(Double energie100gr_produit) {
-		this.energie100gr_produit = energie100gr_produit;
+	public void setEnergie100grProduit(Double energie100grProduit) {
+		this.energie100grProduit = energie100grProduit;
 	}
 
-	public Double getSel100gr_produit() {
-		return sel100gr_produit;
+	public Double getSel100grProduit() {
+		return sel100grProduit;
 	}
 
-	public void setSel100gr_produit(Double sel100gr_produit) {
-		this.sel100gr_produit = sel100gr_produit;
+	public void setSel100grProduit(Double sel100grProduit) {
+		this.sel100grProduit = sel100grProduit;
 	}
 
-	public Double getGraisse100gr_produit() {
-		return graisse100gr_produit;
+	public Double getGraisse100grProduit() {
+		return graisse100grProduit;
 	}
 
-	public void setGraisse100gr_produit(Double graisse100gr_produit) {
-		this.graisse100gr_produit = graisse100gr_produit;
+	public void setGraisse100grProduit(Double graisse100grProduit) {
+		this.graisse100grProduit = graisse100grProduit;
 	}
 
-	public Double getSucres100gr_produit() {
-		return sucres100gr_produit;
+	public Double getSucres100grProduit() {
+		return sucres100grProduit;
 	}
 
-	public void setSucres100gr_produit(Double sucres100gr_produit) {
-		this.sucres100gr_produit = sucres100gr_produit;
+	public void setSucres100grProduit(Double sucres100grProduit) {
+		this.sucres100grProduit = sucres100grProduit;
 	}
 
-	public Double getProtein100gr_produit() {
-		return protein100gr_produit;
+	public Double getProtein100grProduit() {
+		return protein100grProduit;
 	}
 
-	public void setProtein100gr_produit(Double protein100gr_produit) {
-		this.protein100gr_produit = protein100gr_produit;
+	public void setProtein100grProduit(Double protein100grProduit) {
+		this.protein100grProduit = protein100grProduit;
 	}
 
-	public Double getFibres100gr_produit() {
-		return fibres100gr_produit;
+	public Double getFibres100grProduit() {
+		return fibres100grProduit;
 	}
 
-	public void setFibres100gr_produit(Double fibres100gr_produit) {
-		this.fibres100gr_produit = fibres100gr_produit;
+	public void setFibres100grProduit(Double fibres100grProduit) {
+		this.fibres100grProduit = fibres100grProduit;
+	}
+
+	public List<Additif> getAdditifs() {
+		return additifs;
+	}
+
+	public void setAdditifs(List<Additif> additifs) {
+		this.additifs = additifs;
+	}
+
+	public List<Allergene> getAllergenes() {
+		return allergenes;
+	}
+
+	public void setAllergenes(List<Allergene> allergenes) {
+		this.allergenes = allergenes;
+	}
+
+	public List<Ingredient> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(List<Ingredient> ingredients) {
+		this.ingredients = ingredients;
+	}
+
+	public Categorie getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
+
+	public Marque getMarque() {
+		return marque;
+	}
+
+	public void setMarque(Marque marque) {
+		this.marque = marque;
 	}
 
 	@Override
 	public String toString() {
-		return "Produit [id=" + id + ", nom_produit=" + nom_produit + ", nutritionGradeFr_produit="
-				+ nutritionGradeFr_produit + ", energie100gr_produit=" + energie100gr_produit + ", sel100gr_produit="
-				+ sel100gr_produit + ", graisse100gr_produit=" + graisse100gr_produit + ", sucres100gr_produit="
-				+ sucres100gr_produit + ", protein100gr_produit=" + protein100gr_produit + ", fibres100gr_produit="
-				+ fibres100gr_produit + "]";
+		return "Produit [id=" + id + ", nomProduit=" + nomProduit + ", nutritionGradeFrProduit="
+				+ nutritionGradeFrProduit + ", energie100grProduit=" + energie100grProduit + ", sel100grProduit="
+				+ sel100grProduit + ", graisse100grProduit=" + graisse100grProduit + ", sucres100grProduit="
+				+ sucres100grProduit + ", protein100grProduit=" + protein100grProduit + ", fibres100grProduit="
+				+ fibres100grProduit + ", additifs=" + additifs + ", allergenes=" + allergenes + ", ingredients="
+				+ ingredients + ", categorie=" + categorie + ", marque=" + marque + "]";
 	}
+
+	
+	
 
 }

@@ -19,8 +19,8 @@ public class MarqueDao extends AbstractDao {
 
 	// connection via la classe AbstractDao qui centralise
 
-	private EntityManager em = AbstractDao.emf.createEntityManager();
-	private EntityTransaction transaction = em.getTransaction();
+	private static EntityManager em = AbstractDao.emf.createEntityManager();
+	private static EntityTransaction transaction = em.getTransaction();
 
 	public MarqueDao() {
 
@@ -30,26 +30,44 @@ public class MarqueDao extends AbstractDao {
 
 	// Insérer en base de données
 
-	public void insertMarque(Marque marque) {
-		
-		TypedQuery<Marque> query = em.createQuery("SELECT marque FROM Marque marque WHERE marque.nomMarque = ?1",Marque.class);
-		query.setParameter(1, marque.getNomMarque());
-		
-		List<Marque> listMarque = query.getResultList();
+	public static Marque insertMarque(String[] tabInfoProd) {
 
-		if (listMarque.isEmpty()) {
+		String nomMarque = tabInfoProd[1];
 
-			transaction.begin();
+		if (nomMarque.length() <= 255) {
 
-			em.persist(marque);
+			Marque marque = new Marque(null);
 
-			transaction.commit();
+			TypedQuery<Marque> query = em.createQuery("SELECT marque FROM Marque marque WHERE marque.nomMarque = ?1",
+					Marque.class);
+			query.setParameter(1, nomMarque);
+
+			List<Marque> listMarque = query.getResultList();
+
+			if (listMarque.isEmpty()) {
+
+				
+				transaction.begin();
+				marque = new Marque();
+				marque.setNomMarque(nomMarque);
+				
+				em.persist(marque);
+
+				transaction.commit();
+				
+			} else {
+				
+				marque = listMarque.get(0);
+			}
+			
+			return marque;
+
 		}
-
-		// TODO Récupérer par ID
-		// TODO Récupérer toute la liste
-		// TODO update
-		// TODO delete
-
+		return null;
 	}
+	// TODO Récupérer par ID
+	// TODO Récupérer toute la liste
+	// TODO update
+	// TODO delete
+
 }
