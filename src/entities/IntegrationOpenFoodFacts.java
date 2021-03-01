@@ -60,6 +60,7 @@ public class IntegrationOpenFoodFacts {
 			Categorie categorie = CategorieDao.insertCategorie(tabInfoProd);
 			Marque marque = MarqueDao.insertMarque(tabInfoProd);
 			Produit produit = ProduitDao.insertProduit(tabInfoProd, categorie, marque);
+			IngredientDao.insertIngredient(tabInfoProd, produit);
 			
 
 			compteur++;
