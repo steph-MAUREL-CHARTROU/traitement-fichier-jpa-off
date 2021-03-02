@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import entities.Additif;
 import entities.Categorie;
+import entities.Produit;
 
 /**
  * 
@@ -19,8 +20,8 @@ public class AdditifDao extends AbstractDao {
 
 	// connection via la classe AbstractDao qui centralise
 
-	private EntityManager em = AbstractDao.emf.createEntityManager();
-	private EntityTransaction transaction = em.getTransaction();
+	private static EntityManager em = AbstractDao.emf.createEntityManager();
+	private static EntityTransaction transaction = em.getTransaction();
 
 	public AdditifDao() {
 
@@ -30,25 +31,41 @@ public class AdditifDao extends AbstractDao {
 
 	// Insérer en base de données
 
-	public void insertAdditif(Additif additif) {
+	public static void insertAdditif(String[] tabInfoProd, Produit produit) {
 
-		TypedQuery<Additif> query = em.createQuery("SELECT additif FROM Additif additif WHERE additif.nomAdditif = ?1",
-				Additif.class);
-		query.setParameter(1, additif.getNomAdditif());
-		List<Additif> listAdditif = query.getResultList();
+		String[] nomAdditif = tabInfoProd[29].split("[,]", -1);
 
-		if (listAdditif.isEmpty()) {
+		for (String additif : nomAdditif) {
 
-			transaction.begin();
+			if (nomAdditif.length <= 255) {
 
-			em.persist(additif);
+				Additif additifs = null;
 
-			transaction.commit();
+				TypedQuery<Additif> query = em.createQuery(
+						"SELECT additif FROM Additif additif WHERE additif.nomAdditif = ?1", Additif.class);
+				query.setParameter(1, additif);
+				List<Additif> listAdditif = query.getResultList();
+
+				if (listAdditif.isEmpty()) {
+
+					transaction.begin();
+					additifs = new Additif();
+					additifs.setNomAdditif(additif);
+
+					em.persist(additifs);
+
+					transaction.commit();
+				} else {
+
+					additifs = listAdditif.get(0);
+				}
+
+			}
 		}
-
-		// TODO Récupérer par ID
-		// TODO Récupérer toute la liste
-		// TODO update
-		// TODO delete
 	}
+
+	// TODO Récupérer par ID
+	// TODO Récupérer toute la liste
+	// TODO update
+	// TODO delete
 }

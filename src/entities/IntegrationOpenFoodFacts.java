@@ -8,8 +8,10 @@ import java.nio.file.Paths;
 
 import java.util.List;
 
+import daos.AdditifDao;
+import daos.AllergeneDao;
 import daos.CategorieDao;
-//import daos.IngredientDao;
+import daos.IngredientDao;
 import daos.MarqueDao;
 import daos.ProduitDao;
 
@@ -56,7 +58,9 @@ public class IntegrationOpenFoodFacts {
 			Categorie categorie = CategorieDao.insertCategorie(tabInfoProd);
 			Marque marque = MarqueDao.insertMarque(tabInfoProd);
 			Produit produit = ProduitDao.insertProduit(tabInfoProd, categorie, marque);
-			//IngredientDao.insertIngredient(tabInfoProd, produit);
+			IngredientDao.insertIngredient(tabInfoProd, produit);
+			AdditifDao.insertAdditif(tabInfoProd, produit);
+			AllergeneDao.insertAllergene(tabInfoProd,produit);
 			
 
 			compteur++;
