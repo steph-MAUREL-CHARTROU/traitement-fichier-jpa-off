@@ -28,7 +28,7 @@ public class ProduitDao extends AbstractDao {
 
 	public static Produit insertProduit(String[] tabInfoProd, Categorie categorie, Marque marque) {
 
-		Produit produit = new Produit(null);
+		Produit produit = new Produit();
 
 		String nomProduit = tabInfoProd[2];
 
@@ -77,6 +77,7 @@ public class ProduitDao extends AbstractDao {
 
 			return produit;
 		} else {
+			
 			return null;
 		}
 

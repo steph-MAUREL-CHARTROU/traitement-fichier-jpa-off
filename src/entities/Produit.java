@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -71,7 +72,7 @@ public class Produit {
 	@ManyToMany
 	@JoinTable(name = " TB_PROD_INGRDT", joinColumns = @JoinColumn(name = "PROD_ID", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "INGRDT_ID", referencedColumnName = " id"))
 
-	private List<Ingredient> ingredients;
+	private List<Ingredient> ingredients = new ArrayList();
 
 	// ----Produits - Categories-----//
 

@@ -1,6 +1,7 @@
 package daos;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -62,7 +63,7 @@ public class IngredientDao extends AbstractDao {
 					ingrt = listIngredient.get(0);
 
 				}
-
+				
 				produit.getIngredients().add(ingrt);
 				transaction.commit();
 
